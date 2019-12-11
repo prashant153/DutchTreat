@@ -41,7 +41,7 @@
 Adding more views
 * Add more views in a similar way.
 * Add the following in the _Layout : 
-	<header>
+	```<header>
         <h1>Welcome to Dutch Treat</h1>
         <menu>
             <ul>
@@ -50,7 +50,7 @@ Adding more views
                 <li><a href="/app/about">About</a></li>
             </ul>
         </menu>
-    </header>
+    </header>```
 * menu li (vs) menu>ul>li : the first one means that li being some child of menu 
 * and the latter means that li strictly being inside ul and that in turn inside menu.
 * add the following css :
