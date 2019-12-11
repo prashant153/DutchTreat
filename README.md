@@ -1,5 +1,9 @@
 # DutchTreat
-Building a Web App with Dotnet Core, MVC, Entity framework core, Bootstrap and Angular
+## Building a Web App with Dotnet Core, MVC, Entity framework core, Bootstrap and Angular
+[### CSS] (#CSS)
+### Package.json
+### Enabling MVC 6
+
 CSS
 * space in css means class of child.
 * by default divs are displayed in a type called "block": and "block" takes as many horizontal space as possible.
