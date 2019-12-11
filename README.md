@@ -6,6 +6,8 @@
 * [Creating a Layout](#headCreatingLayout)
 * [Adding more Views](#headAddingMoreViews)
 * [Using Tag Helpers](#headUsingTagHelpers)
+* [Razor Pages](#headRazorPages)
+* [Implementing A View](#headImplementingView)
 
 ### <a name="headCss"></a>CSS
 * space in css means class of child.
@@ -75,7 +77,7 @@
 		}
 ```
 
-*** <a name="headUsingTagHelpers"></a>Using Tag Helpers
+### <a name="headUsingTagHelpers"></a>Using Tag Helpers
 * The links created above are fragile.
 * We can make it better using Tag Helpers.
 * To use Tag Helpers, we need to add "MVC View Imports Page" : _ViewImports.cshtml inside Views folder.
@@ -97,14 +99,16 @@
 ```
 * Sometimes we give default routing without giving the controller name, eg: www.Website.com/Contact 
 * For that we can add Attribute like this:
+```csharp
 	[HttpGet("contact")]
     public IActionResult Contact()
     {
         ViewBag.Title = "Contact Us";
         return View();
     }
+```
 
-Razor Pages
+### <a name="headRazorPages"></a>Razor Pages
 * Sometimes we need to create a view just to show some message; eg error page.
 * Up until now we had to create it through controller and action.
 * But with Razor Pages we can directly use a view without creating a controller.
@@ -113,15 +117,17 @@ Razor Pages
   	-> Add a .cshtml file
     -> The page must start with @page declatation.
 	
-Implementing a View
+### <a name="headImplementingView"></a>Implementing a View
 * Add a form with method="post" as attribute in form tag.
 * Add a post method for contact in Controller: eg:
+```csharp
 	[HttpPost("contact")]
     public IActionResult Contact(object model)
     {
         ViewBag.Title = "Contact Us";
         return View();
     }
+```
 * This in itself won't send any data to model.
 * So to send the data we need to add "name" attribute to all the input tags.
 
