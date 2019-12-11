@@ -1,4 +1,4 @@
-# DutchTreat
+# <a name="home"></a>DutchTreat
 ## Building a Web App with Dotnet Core, MVC, Entity framework core, Bootstrap and Angular
 * [CSS](#headCss)
 * [Package.json](#headPackageJson)
@@ -43,7 +43,7 @@
 * Add more views in a similar way.
 * Add the following in the _Layout : 
 
-```
+```html
     <header>
         <h1>Welcome to Dutch Treat</h1>
             <menu>
@@ -60,7 +60,7 @@
 * and the latter means that li strictly being inside ul and that in turn inside menu.
 * add the following css :
 
-```
+```css
 	menu li {
 		display: inline;
 	}
