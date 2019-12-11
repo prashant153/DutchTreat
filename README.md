@@ -18,8 +18,10 @@
 * go to Startup.cs -> Configure() -> app.UseNodeModules();
 * Red squiggly -> Right click on Solution -> Manage NuGet Packages -> search UseNodeModules -> OdeToCode
 * This middleware allows "node_modules" folder to be used as if it's inside "wwwroot" folder.
-* <script src="/node_modules/jquery/dist/jquery.min.js"></script>  								
-                                                                                       [Back to Index](#home)
+```html
+    <script src="/node_modules/jquery/dist/jquery.min.js"></script>  								
+```
+* [Back to Index](#home)
 
 ### <a name="headEnablingMvc6"></a>Enabling MVC 6
 * Add a folder called Controllers -> Add "Name"Controller.cs inside it.
