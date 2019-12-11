@@ -8,6 +8,7 @@
 * [Using Tag Helpers](#headUsingTagHelpers)
 * [Razor Pages](#headRazorPages)
 * [Implementing A View](#headImplementingView)
+* [Model Binding](#headModelBinding)
 
 ### <a name="headCss"></a>CSS
 * space in css means class of child.
@@ -43,6 +44,7 @@
 * Running the project now won't show the layout.
 * We need to either set it inside each page below ViewBag.Title (not recommended) or
 * Add MVC View Start Page inside the Views folder.
+* [Back to Index](#home)
 
 ### <a name="headAddingMoreViews"></a>Adding more views
 * Add more views in a similar way.
@@ -131,7 +133,7 @@
 * This in itself won't send any data to model.
 * So to send the data we need to add "name" attribute to all the input tags.
 
-Model Binding
+### <a name="headModelBinding"></a>Model Binding
 * For easier access of the passed in data we can use model binding.
 * Create POCO class.
 * Replace object with the "ContactViewModel".
