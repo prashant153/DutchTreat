@@ -5,6 +5,7 @@
 * [Enabling MVC 6](#headEnablingMvc6)
 * [Creating a Layout](#headCreatingLayout)
 * [Adding more Views](#headAddingMoreViews)
+* [Using Tag Helpers](#headUsingTagHelpers)
 
 ### <a name="headCss"></a>CSS
 * space in css means class of child.
@@ -74,15 +75,18 @@
 		}
 ```
 
-Using Tag Helpers
+*** <a name="headUsingTagHelpers"></a>Using Tag Helpers
 * The links created above are fragile.
 * We can make it better using Tag Helpers.
 * To use Tag Helpers, we need to add "MVC View Imports Page" : _ViewImports.cshtml inside Views folder.
 * We can add any namespace that is required for all the view pages inside this.
 * Add the following:
+```csharp
 	@using DutchTreat.Controllers
 	@addTagHelper "*, Microsoft.AspNetCore.Mvc.TagHelpers"
+```
 * Instead of href, we give "asp-" tag helpers, eg:
+```html
     <menu>
         <ul>
             <li><a asp-controller="App" asp-action="Home" >Home</a></li>
@@ -90,6 +94,7 @@ Using Tag Helpers
             <li><a asp-controller="App" asp-action="About">About</a></li>
         </ul>
     </menu>
+```
 * Sometimes we give default routing without giving the controller name, eg: www.Website.com/Contact 
 * For that we can add Attribute like this:
 	[HttpGet("contact")]
