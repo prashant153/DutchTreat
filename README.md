@@ -1,15 +1,15 @@
 # DutchTreat
 ## Building a Web App with Dotnet Core, MVC, Entity framework core, Bootstrap and Angular
 * [CSS](#headCss)
-### Package.json
-### Enabling MVC 6
-### Creating a Layout
+* [Package.json] (#headPackageJson)
+* [Enabling MVC 6] (#headEnablingMvc6)
+* [Creating a Layout] (#headCreatingLayout)
 
 ### <a name="headCss"></a>CSS
 * space in css means class of child.
 * by default divs are displayed in a type called "block": and "block" takes as many horizontal space as possible.
 
-package.json
+### <a name="headPackageJson"></a>package.json
 * Loads all of the different js frameworks that we'll need.
 * Add "dependencies":{"jquery":"3.4.1"}
 * Save -> packages are installed.
@@ -20,7 +20,7 @@ package.json
 * <script src="/node_modules/jquery/dist/jquery.min.js"></script>
 
 
-Enabling MVC 6
+### <a name="headEnablingMvc6"></a>Enabling MVC 6
 * Add a folder called Controllers -> Add "Name"Controller.cs inside it.
 * Add a method with return type IActionResult 
 * Add a folder called Views -> Add sub-folder with "Name" -> Add the method name as .cshtml
@@ -30,7 +30,7 @@ Enabling MVC 6
 * or app.UseMvc(routes =>{ routes.MapRoute("default", "{controller=App}/{action=Index}/{id?}");});
 * In ConfigureServices add services.AddMvc();
 
-Creating a Layout
+### <a name="headCreatingLayout"></a>Creating a Layout
 * Add a sub-folder inside Views folder -> name it Shared
 * Add _Layout.cshtml inside the sub-folder.
 * Add head, body -> inside body add header, section, footer -> inside section add @RenderBody()
