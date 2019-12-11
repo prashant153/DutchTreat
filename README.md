@@ -4,6 +4,7 @@
 * [Package.json](#headPackageJson)
 * [Enabling MVC 6](#headEnablingMvc6)
 * [Creating a Layout](#headCreatingLayout)
+* [Adding more Views](#headAddingMoreViews)
 
 ### <a name="headCss"></a>CSS
 * space in css means class of child.
@@ -38,22 +39,28 @@
 * We need to either set it inside each page below ViewBag.Title (not recommended) or
 * Add MVC View Start Page inside the Views folder.
 
-Adding more views
+### <a name="headAddingMoreViews"></a>Adding more views
 * Add more views in a similar way.
 * Add the following in the _Layout : 
-	```<header>
+
+```
+    <header>
         <h1>Welcome to Dutch Treat</h1>
-        <menu>
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/app/contact">Contact</a></li>
-                <li><a href="/app/about">About</a></li>
-            </ul>
-        </menu>
-    </header>```
+            <menu>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/app/contact">Contact</a></li>
+                    <li><a href="/app/about">About</a></li>
+                </ul>
+            </menu>
+    </header>
+```
+
 * menu li (vs) menu>ul>li : the first one means that li being some child of menu 
 * and the latter means that li strictly being inside ul and that in turn inside menu.
 * add the following css :
+
+```
 	menu li {
 		display: inline;
 	}
@@ -63,7 +70,8 @@ Adding more views
 		menu li:last-of-type::after{
 			content: "";
 		}
-		
+```
+
 Using Tag Helpers
 * The links created above are fragile.
 * We can make it better using Tag Helpers.
