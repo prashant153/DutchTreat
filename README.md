@@ -9,6 +9,7 @@
 * [Razor Pages](#headRazorPages)
 * [Implementing A View](#headImplementingView)
 * [Model Binding](#headModelBinding)
+* [Using Validation](#headUsingValidation)
 
 ### <a name="headCss"></a>CSS
 * space in css means class of child.
@@ -78,6 +79,7 @@
 			content: "";
 		}
 ```
+* [Back to Index](#home)
 
 ### <a name="headUsingTagHelpers"></a>Using Tag Helpers
 * The links created above are fragile.
@@ -123,7 +125,7 @@
 * Add a form with method="post" as attribute in form tag.
 * Add a post method for contact in Controller: eg:
 ```csharp
-	[HttpPost("contact")]
+    [HttpPost("contact")]
     public IActionResult Contact(object model)
     {
         ViewBag.Title = "Contact Us";
@@ -148,9 +150,10 @@
 * We can add the tag helpers to label too. 
 * This will make clicking on label send the curzor to the input field directly plus it's mobile touch friendly too.
 
-Using Validation
+### <a name="headUsingValidation"></a>Using Validation
 * Add the attribute validation, eg:
-	public class ContactViewModel
+```csharp
+    public class ContactViewModel
     {
         [Required]
         [MinLength(2)]
@@ -164,6 +167,7 @@ Using Validation
         [MaxLength(250,ErrorMessage ="Too long")]
         public string Message { get; set; }
     }
+````
 * In the post method, we need to further check if the model passed is valid, by using: ModelState.IsValid
 * <div asp-validation-summary="All"></div> shows all the errors at one place after the validation fails at server.
 * If we want to show the error message before pressing the send button:
@@ -178,11 +182,12 @@ Using Validation
 * To do this we'll be using	@RenderSection("Scripts", false); inside _Layout.cshtml page.
 * "false" above indicates that it is not mandatory to be used in all the views.
 * Add the following wherever required:
+```csharp
 	@section Scripts{
 		<script src="~/node_modules/jquery-validation/dist/jquery.validate.min.js"></script>
 		<script src="~/node_modules/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
 	}
-
+```
 Adding a service
 * _mailService.SendMessage("test@test.com", model.Subject, $"From: {model.Name} - {model.Email}, Message: {model.Message}");
 * Add a folder called "Services" to the project.
