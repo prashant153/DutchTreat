@@ -11,6 +11,9 @@
 * [Model Binding](#headModelBinding)
 * [Using Validation](#headUsingValidation)
 * [Adding A Service](#headAddingAService)
+* [Adding Bootstrap](#headAddingBootstrap)
+* [Building A Nav Bar](#headBuildingANavBar)
+* [Bootstrap Grid System](#headBootstrapGridSystem)
 
 ### <a name="headCss"></a>CSS
 * space in css means class of child.
@@ -238,7 +241,9 @@
        return View();
    }
 ```
-Adding Bootstrap
+* [Back to Index](#home)
+
+### <a name="headAddingBootstrap"></a> Adding Bootstrap
 * Add the package in package.json
 * In the layout page, add the bootstrap css link inside head tag.
 * Add the js script link: bootstrap.bundle.min.js link below jquery.min.js
@@ -246,11 +251,12 @@ Adding Bootstrap
 * Add class="container" to all the main sections: header, section and footer: this brings the sections to center of the page from left.
 * Add class="text-center" to footer; class="btn btn-success" to button.
 
-Building a NavBar
+### <a name="headBuildingANavBar"></a>Building a NavBar
 * We'll replace menu tag in Layout page with a nav tag.
 * This isn't required but we are just telling HTML5 about where the navigation exists.
 * <nav class="navbar"> and move this inside nav:<h1 class="navbar-brand">Welcome to Dutch Treat</h1>
 * Add this:
+```html
   <nav class="navbar navbar-dark bg-dark navbar-expand-md ">
 	<h1 class="navbar-brand">Welcome to Dutch Treat</h1>
     <button class="navbar-toggler" data-toggle="collapse" data-target="#theMenu">
@@ -269,11 +275,13 @@ Building a NavBar
             </li>
         </ul>
     </div>
-  </nav>	
+  </nav>
+```
 * Add a button to show a hamburger symbol whenever screen size becomes smaller than the given breakpoint i.e. navbar-expand-md
 * Add data-toggle="collapse" and data-target="#theMenu": common pattern in bootstrap to add data- attributes.
+* [Back to Index](#home)
 
-Bootstrap Grid System
+### <a name="headBootstrapGridSystem"></a>Bootstrap Grid System
 * 12-column system.
 * .col-6 | .col-6 ; .col-4 | .col-4 | .col-4; ......
 * |0|0|1|1|1|1|1|1|1|1|0|0| --> .col-8 .offset-2
