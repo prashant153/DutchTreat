@@ -10,6 +10,7 @@
 * [Implementing A View](#headImplementingView)
 * [Model Binding](#headModelBinding)
 * [Using Validation](#headUsingValidation)
+* [Adding A Service](#headAddingAService)
 
 ### <a name="headCss"></a>CSS
 * space in css means class of child.
@@ -111,6 +112,7 @@
         return View();
     }
 ```
+* [Back to Index](#home)
 
 ### <a name="headRazorPages"></a>Razor Pages
 * Sometimes we need to create a view just to show some message; eg error page.
@@ -149,6 +151,7 @@
 * Once the declatation is added, we can now use "asp-" tag helpers eg: asp-for="Name".
 * We can add the tag helpers to label too. 
 * This will make clicking on label send the curzor to the input field directly plus it's mobile touch friendly too.
+* [Back to Index](#home)
 
 ### <a name="headUsingValidation"></a>Using Validation
 * Add the attribute validation, eg:
@@ -188,12 +191,15 @@
 		<script src="~/node_modules/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
 	}
 ```
-Adding a service
+* [Back to Index](#home)
+
+### <a name="headAddingAService"></a>Adding a service
 * _mailService.SendMessage("test@test.com", model.Subject, $"From: {model.Name} - {model.Email}, Message: {model.Message}");
 * Add a folder called "Services" to the project.
 * Add a file inside it : NullMailService.cs
 * Create a method: SendMessage; add a logger.
-	private readonly ILogger<NullMailService> _logger;
+```csharp
+    private readonly ILogger<NullMailService> _logger;
 	
     public NullMailService(ILogger<NullMailService> logger)
     {
@@ -204,17 +210,21 @@ Adding a service
         //Log the message.
         _logger.LogInformation($"To: {to} Subject: {subject} Body: {body}");
     }
+```
 * Extract an interface from the class. Reason being, we can have multiple implementations.
 * In order to use this service we need to configure it in Startup.cs
 * We can configure it mainly in 3 ways: services.AddTransient(), services.AddScoped(), services.AddSingleton()		
 * services.AddTransient<INullMailService, NullMailService>();
 * Again, in the AppController, use the constructor injection to inject the service created:
-	private readonly INullMailService _mailService;
+```csharp	
+    private readonly INullMailService _mailService;
     public AppController (INullMailService nullMailService)
     {
         _mailService = nullMailService;
     }
-* [HttpPost("contact")]
+```
+```csharp
+   [HttpPost("contact")]
    public IActionResult Contact(ContactViewModel model)
    {
        ViewBag.Title = "Contact Us";
@@ -227,7 +237,7 @@ Adding a service
        }         
        return View();
    }
-
+```
 Adding Bootstrap
 * Add the package in package.json
 * In the layout page, add the bootstrap css link inside head tag.
