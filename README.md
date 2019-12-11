@@ -1,6 +1,6 @@
 # DutchTreat
 ## Building a Web App with Dotnet Core, MVC, Entity framework core, Bootstrap and Angular
-[### CSS] (#CSS)
+### [CSS] (#css)
 ### Package.json
 ### Enabling MVC 6
 
