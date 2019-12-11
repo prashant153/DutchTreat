@@ -1,9 +1,9 @@
 # DutchTreat
 ## Building a Web App with Dotnet Core, MVC, Entity framework core, Bootstrap and Angular
 * [CSS](#headCss)
-* [Package.json] (#headPackageJson)
-* [Enabling MVC 6] (#headEnablingMvc6)
-* [Creating a Layout] (#headCreatingLayout)
+* [Package.json](#headPackageJson)
+* [Enabling MVC 6](#headEnablingMvc6)
+* [Creating a Layout](#headCreatingLayout)
 
 ### <a name="headCss"></a>CSS
 * space in css means class of child.
