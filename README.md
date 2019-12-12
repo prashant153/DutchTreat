@@ -1305,7 +1305,13 @@ Using Identity in the API
 ```
 * For testing, let's add [Authorize] attribute over any controller: (say OrdersController).
 * Making any API call will now try to redirect to ogin pageand hence it will respond with 200 OK.
-* We can change response code settings in postman, this will send 302 code.
+* We can change response code settings in postman, this will send 302 Found.
+* Basically both the code is misleading and incorrect.
+* We need to change ```[Authorize]``` to ```[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]```
+* After this we'll be getting 401 Unauthorized error code which is more appropriate.
+* The earliear redirect related response code was coming due to Cookie based authentication.
+* With the latter Jwt authentication we can see more valid error code.
+
 
 
 
