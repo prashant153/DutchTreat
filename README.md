@@ -14,6 +14,9 @@
 * [Adding Bootstrap](#headAddingBootstrap)
 * [Building A Nav Bar](#headBuildingANavBar)
 * [Bootstrap Grid System](#headBootstrapGridSystem)
+* [Bootstrap Forms](#headBootstrapForms)
+* [Using Font Awesome](#headUsingFontAwesome)
+* [Entity Framework Core](#headEntityFrameworkCore)
 
 ### <a name="headCss"></a>CSS
 * space in css means class of child.
@@ -292,18 +295,20 @@
 	.col-sm-xx: <768px
 	.col-xx: <576px
 
-Bootstrap Forms
+### <a name="headBootstrapForms"></a>Bootstrap Forms
 * We can now put each group of logical elements in a separate div with class="form-group"
-	<div class="form-group">
+```html
+    <div class="form-group">
         <label asp-for="Name">Your Name:</label>
         <input asp-for="Name" />
         <span asp-validation-for="Name"></span>
     </div>
-* Now we can also eliminate the hard coded line breaks <br />
+```
+* Now we can also eliminate the hard coded line breaks ```<br />```
 * <input type="submit" value="Send Message" class="btn btn-primary" />
 * for span with asp-validation-for add the class="text-danger" and class="text-success" for success message.
 
-Using font-awesome
+### <a name="headUsingFontAwesome"></a>Using font-awesome
 * These are used to add icons.
 * The way to use it is to add the i tag and add respective class.
 * In the package.json file add "font-awesome" 
@@ -311,7 +316,7 @@ Using font-awesome
 * Add the link before site.css; just in case we want to override it.
 * Adding the font-awesome solves the change in font-size issues as well.
 
-Entity Framework Core
+### <a name="headEntityFrameworkCore"></a>Entity Framework Core
 * Creating Entities.
 * Using EF Core Tooling.
 * Using Configuration.
@@ -320,6 +325,7 @@ Entity Framework Core
 * The Repository Pattern.
 * Showing the Products.
 * Logging Errors.
+* [Back to Index](#home)
 
 Creating Entities
 * Create a folder called Data - That will contain the classes for our different interfaces to our DB.
