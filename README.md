@@ -18,6 +18,7 @@
 * [Using Font Awesome](#headUsingFontAwesome)
 * [Entity Framework Core](#headEntityFrameworkCore)
 * [Create An API Controller](#headCreateAnAPIController)
+* [ASP.NET Core Identity](#headASPNETCoreIdentity)
 
 ### <a name="headCss"></a>CSS
 * space in css means class of child.
@@ -1076,8 +1077,9 @@ Using QueryStrings for API's
             return BadRequest("Failed to get orders");
         }
     }
+* [Back to Index](#home)
 
-ASP.NET Core Identity
+### <a name="headASPNETCoreIdentity"></a>ASP.NET Core Identity
 * Replacement for ASP.NET Memnership
 * Supports more types of authentication. - Cookies, OAuth2, etc.
 * Pluggable
