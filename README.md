@@ -17,6 +17,7 @@
 * [Bootstrap Forms](#headBootstrapForms)
 * [Using Font Awesome](#headUsingFontAwesome)
 * [Entity Framework Core](#headEntityFrameworkCore)
+* [Create An API Controller](#headCreateAnAPIController)
 
 ### <a name="headCss"></a>CSS
 * space in css means class of child.
@@ -578,8 +579,8 @@ Logging the Errors
         }
        
     }	
-
-Create an API Controller
+* [Back to Index](#home)
+### <a name="headCreateAnAPIController"></a>Create an API Controller
 * Before starting this Install Postman.
 * In VS -> open project settings -> Rt click project -> open properties -> Debug -> Uncheck Launch Browser
 * Add a ProductsController class that inherits from Controller.
