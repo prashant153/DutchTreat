@@ -1298,10 +1298,14 @@ Using Identity in the API
 	-> Open ID, OAuth2, or JWT Tokens are best.
 	-> Depends most on your security requirements, not the effort level.
 * Add the following configuration in ConfigureServices(after services.AddIdentity):
+```csharp
 	services.AddAuthentication()
                 .AddCookie()
                 .AddJwtBearer();	
-* 
+```
+* For testing, let's add [Authorize] attribute over any controller: (say OrdersController).
+* Making any API call will now try to redirect to ogin pageand hence it will respond with 200 OK.
+* We can change response code settings in postman, this will send 302 code.
 
 
 
