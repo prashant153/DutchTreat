@@ -1083,7 +1083,7 @@ Using QueryStrings for API's
 * Replacement for ASP.NET Memnership
 * Supports more types of authentication. - Cookies, OAuth2, etc.
 * Pluggable
-	- Have complete control over Uder Entities
+	- Have complete control over User Entities
 	- Support non-relational identities
 	- Even LDAP/AD stores
 	
