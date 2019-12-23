@@ -1094,14 +1094,17 @@ Using Authorize attribute
 Storing Identities in the Database
 * In the entities folder add a class called StoreUser.
 * Add properties inside StoreUser class, that will inherit other props on top of it from IdentityUser.
-	public class StoreUser : IdentityUser
+```csharp
+    public class StoreUser : IdentityUser
     {
         public string Firstname { get; set; }
         public string LastName { get; set; }
     }
+```
 * Go to DutchContext -> instead of deriving from DbContext derive from IdentityDbContext.
 * In the Order entity, -> Add a property User of StoreUser type:
-	public class Order
+```csharp
+    public class Order
     {
         public int Id { get; set; }
         public DateTime OrderDate { get; set; }
@@ -1109,14 +1112,16 @@ Storing Identities in the Database
         public ICollection<OrderItem> Items { get; set; }
         public StoreUser User { get; set; }
     }
+```
 * This way we are tying Indentity with Order system.
 * To integrate the new properties and inherited ones go to console window :
-	dotnet ef migrations add Identity
+```dotnet ef migrations add Identity ```
 * It has the code in it to create the new tables, new relationships and even to modify order table
 * Before that :
-	dotnet ef migrations add Identity
+``` dotnet ef database drop ```
 * Open DutchSeeder.cs -> 
-	public class DutchSeeder
+```csharp
+    public class DutchSeeder
     {
         private readonly DutchContext _ctx;
         private readonly IHostingEnvironment _hosting;
@@ -1172,20 +1177,24 @@ Storing Identities in the Database
             }
         }
     }
+```    
 * In Program.cs -> change seeder.Seed() to seeder.SeedAsync().Wait();
 	
 Configuring Identity
 * In the startup ConfigureServices:
-	services.AddIdentity<StoreUser, IdentityRole>(cfg =>
-                    cfg.User.RequireUniqueEmail = true
-                )
-                .AddEntityFrameworkStores<DutchContext>();
+```csharp
+   services.AddIdentity<StoreUser, IdentityRole>(cfg =>
+             cfg.User.RequireUniqueEmail = true
+           )
+           .AddEntityFrameworkStores<DutchContext>();
+```
 * Add app.UseAuthentication();
       app.UseAuthorization(); // in case of .net core 2.1
 * Clicking on Shop tab will now try to redirectvia Login, which is not present.	 
 
 Designing the Login View & Implementing Login and Logout
 * Login.cshtml
+```cshtml
 @model LoginViewModel
 @section Scripts{
     <script src="~/node_modules/jquery-validation/dist/jquery.validate.min.js"></script>
@@ -1222,7 +1231,89 @@ Designing the Login View & Implementing Login and Logout
         </form>
     </div>
 </div>
+```
 * AccountController
+```csharp
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using DutchTreat.Data.Entities;
+using DutchTreat.ViewModels;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+
+namespace DutchTreat.Controllers
+{
+    public class AccountController : Controller
+    {
+        private readonly ILogger<AccountController> _logger;
+        private readonly SignInManager<StoreUser> _signInManager;
+        private readonly UserManager<StoreUser> _userManager;
+
+        public AccountController(ILogger<AccountController> logger, 
+                                 SignInManager<StoreUser> signInManager,
+                                 UserManager<StoreUser> userManager)
+        {
+            _logger = logger;
+            _signInManager = signInManager;
+            _userManager = userManager;
+        }
+        public IActionResult Login()
+        {
+            ViewBag.Title = "Contact Us";
+            if (this.User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "App");
+            }
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginViewModel model)
+        {
+            ViewBag.Title = "Contact Us";
+            if (ModelState.IsValid)
+            {
+                var result =await _signInManager.PasswordSignInAsync(model.Username, model.Password,model.RememberMe, false);
+                if (result.Succeeded)
+                {
+                    if(Request.Query.Keys.Contains("ReturnUrl"))
+                    {
+                        return Redirect(Request.Query["ReturnUrl"].First());
+                    }
+                    else
+                    {
+                        return RedirectToAction("Shop", "App");
+                    }
+                    
+                }
+            }
+            ModelState.AddModelError("", "Failed to login");
+            return View();
+        }
+        [HttpGet]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "App");
+        }
+        [HttpPost]
+        public IActionResult CreateToken([FromBody] LoginViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = _userManager.FindByNameAsync(model.Username);
+                //var result = _signInManager.CheckPasswordSignInAsync();
+            }
+            return BadRequest();
+        }
+
+    }
+}
+```
+* Login.cshtml
+```cshtml
 @model LoginViewModel
 @section Scripts{
     <script src="~/node_modules/jquery-validation/dist/jquery.validate.min.js"></script>
@@ -1236,8 +1327,7 @@ Designing the Login View & Implementing Login and Logout
             <div class="form-group">
                 <label asp-for="Username">Username</label>
                 <input asp-for="Username" class="form-control" />
-                <span asp-validation-for="Username" class="text-warning"></span>
-                
+                <span asp-validation-for="Username" class="text-warning"></span>                
             </div>
             <div class="form-group">
                 <label asp-for="Password">Password</label>
@@ -1253,13 +1343,13 @@ Designing the Login View & Implementing Login and Logout
             </div>
             <div class="form-group">
                 <input type="submit" value="Login" class="btn btn-success" />
-            </div>
-            
-
+            </div>            
         </form>
     </div>
 </div>
+```
 * LoginViewModel
+```csharp
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -1278,7 +1368,9 @@ namespace DutchTreat.ViewModels
 
     }
 }
+```
 * Add the following in the _Layout:
+```cshtml
 @if (User.Identity.IsAuthenticated)
                     {
                         <li class="nav-item">
@@ -1291,6 +1383,7 @@ namespace DutchTreat.ViewModels
                             <a class="nav-link" asp-controller="Account" asp-action="Login">Login</a>
                         </li>
                     }
+```
 
 Using Identity in the API
 * "Can't I Just Use Cookie Auth for my API:
