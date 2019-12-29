@@ -1179,7 +1179,8 @@ Storing Identities in the Database
     }
 ```    
 * In Program.cs -> change seeder.Seed() to seeder.SeedAsync().Wait();
-	
+
+* [Back to Index](#home)
 Configuring Identity
 * In the startup ConfigureServices:
 ```csharp
@@ -1384,6 +1385,7 @@ namespace DutchTreat.ViewModels
                         </li>
                     }
 ```
+* [Back to Index](#home)
 
 Using Identity in the API
 * "Can't I Just Use Cookie Auth for my API:
@@ -1397,15 +1399,100 @@ Using Identity in the API
                 .AddJwtBearer();	
 ```
 * For testing, let's add [Authorize] attribute over any controller: (say OrdersController).
-* Making any API call will now try to redirect to ogin pageand hence it will respond with 200 OK.
+* Making any API call will now try to redirect to login page and hence it will respond with 200 OK.
 * We can change response code settings in postman, this will send 302 Found.
 * Basically both the code is misleading and incorrect.
 * We need to change ```[Authorize]``` to ```[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]```
 * After this we'll be getting 401 Unauthorized error code which is more appropriate.
 * The earliear redirect related response code was coming due to Cookie based authentication.
 * With the latter Jwt authentication we can see more valid error code.
-
-
+* In order to authenticate via API, we need to add "Authorization" Key and "Bearer a3443orirasddnurh" value token in the HEADER.
+* Even though it's Authorization, keep in mind that it's actually Authenticating.
+* The random string above needs to be generated.
+* The way the system works is that, for the magical string(token) we need to actually pass the actual creds and then get the token.
+* Create token method that will generate the token.
+* It's gonna be a HttpPost method as we don't want to include creds in either Header or QS.
+* And Get doesn't allow us to include a body.
+* In order to create token we'll need few things like Claims, Key and Creds.
+* Claims are set of props with set of values in them.
+* You can use any values in them, these are stored in token that can be used by Clients and when passed back to server.
+* Key is essentially just the secret that we use to encrypt the token.
+* We'll use this key both when a request is made and when we are generating the token, so that we know how to read and write the token.
+* Some parts of the token aren't encrypted and some parts are.
+* Information about the individuals/individual claim can be read without dycrypting the token.
+* But, other parts like creds, and who it's tied to, expiration etc may be encrypted. 
+* So that only server, when it's passed back can use it.
+* The key is created in the following way, using configuration file:
+```csharp var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Tokens:Key"])); ```
+* This becomes handy as later on key can be changed easily, even by IT dept.
+* The Creds are then generated using the key:
+```csharp var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256); ```
+* Now create the token using all the above mentioned props.
+* The configuration file will look something like this:
+```json
+"Tokens": {
+    "key": "woeenf8938bnbaz939",
+    "Issuer": "localhost",
+    "Audience":    
+  }
+```
+* This is how the final method will look like: 
+```csharp
+[HttpPost]
+public async Task<IActionResult> CreateToken([FromBody] LoginViewModel model)
+{
+    if (ModelState.IsValid)
+    {
+        var user = await _userManager.FindByNameAsync(model.Username);
+        if (user != null)
+        {
+            var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false);
+            if (result.Succeeded)
+            {
+                //Create the token
+                var claims = new[]
+                {
+                    new Claim(JwtRegisteredClaimNames.Sub, user.Email)
+                    ,new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+                    //,new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName)
+                };
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Tokens:Key"]));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var token = new JwtSecurityToken(
+                    _configuration["Tokens:Issuer"],
+                    _configuration["Tokens: Audience"],
+                    claims,
+                    expires: DateTime.UtcNow.AddMinutes(30),
+                    signingCredentials: creds
+                    );
+                var results = new
+                {
+                    token = new JwtSecurityTokenHandler().WriteToken(token),
+                    expiration = token.ValidTo
+                };
+		    return Created("",results);
+            }
+        }
+    }
+    return BadRequest();
+}		
+```
+* Now, making a call to this method via Postman by passing the creds from body should send the token back along with it's expiration.
+* Remember to send it as "Json".
+* Sample request:
+```json
+{
+	"username" : "prashant.kumar@dreamorbit.com",
+	"password" : "P@ssw0rd!"
+}
+```
+* The response should look like this:
+```json
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJwcmFzaGFudC5rdW1hckBkcmVhbW9yYml0LmNvbSIsImp0aSI6IjdjMTg3NzNkLTUzMzQtNDJiOC1hZTBmLTBjYTEwZmQ4YzRiMCIsImV4cCI6MTU3NzYzNjY4OCwiaXNzIjoibG9jYWxob3N0In0.bO2ncJ_m3u0RTb-0IIIIoUng6x7ypB272TF9ybosBOU",
+    "expiration": "2019-12-29T16:24:48Z"
+}
+```
 
 
 
