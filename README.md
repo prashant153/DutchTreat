@@ -1493,6 +1493,22 @@ public async Task<IActionResult> CreateToken([FromBody] LoginViewModel model)
     "expiration": "2019-12-29T16:24:48Z"
 }
 ```
+* Now if we send the above token value to access order controller, we'll still get 401 unauthorized.
+* That's because we'll need to add some more configuration to Startup and tell it about our Bearer token.
+* We'll need to setup token validation parameters in Startup.cs:
+```csharp
+services.AddAuthentication()
+                .AddCookie()
+                .AddJwtBearer(cfg =>
+                        {
+                            cfg.TokenValidationParameters = new TokenValidationParameters()
+                            {
+                                ValidIssuer = _config["Tokens:Issuer"],
+                                ValidAudience = _config["Tokens:Audience"],
+                                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]))
+                            };
+                        });
+```
 
 
 
